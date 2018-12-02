@@ -4,7 +4,8 @@
   "description": "无依赖生成文档目录",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel --presets es2015 src/index.js -o dist/js-catalog.js && uglifyjs dist/js-catalog.js -m -o dist/js-catalog.min.js"
   },
   "keywords": [
     "catalog"
@@ -13,6 +14,7 @@
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1"
+    "babel-preset-es2015": "^6.24.1",
+    "uglify-js": "^3.4.9"
   }
 }

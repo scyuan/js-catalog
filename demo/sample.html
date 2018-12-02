@@ -84,127 +84,13 @@ li.catalog-li{
 
   <button type="button" onclick="create();">生成目录</button>
 </body>
+<script src="../dist/js-catalog.min.js"></script>
+
 <script type="text/javascript">
-  var prev = null;
-  var isClick = false;
-
-  function create(opts) {
-    // body...
-    // 根据body内的标签生成标签树
-
-    var default_opts = {
-      content: 'body',
-      catalog: 'catalog'
-    }
-
-    var content = document.getElementById('body');
-    var tags = document.querySelectorAll("h1,h2,h3,h4,h5,h6");
-    tags = findParants(tags);
-    var tree = getTree(tags);
-    var htmlTree = getHtml(tree);
-    //var prev = null;
-
-    document.getElementById('catalog').innerHTML = `<div class="wrapper"><div class="hover"></div>${htmlTree}</div>`;
-    document.getElementById('catalog').addEventListener('click', function (e) {
-      if (e.target.tagName == 'UL') return;
-      if (prev) {
-        prev.className = prev.className.replace('active', '');
-      }
-      e.target.className = e.target.className + ' active';
-      prev = e.target;
-      var datasetId = e.target.getAttribute('data-catalog');
-      const bounding = document.getElementById(datasetId).getBoundingClientRect();
-      document.getElementsByClassName('hover')[0].style.top = e.target.offsetTop + 'px';
-      window.scrollBy({
-        top: bounding.y,
-        behavior: 'smooth'
-      });
-    })
-    activeIndex(tags);
-  }
-
-  function activeIndex(tags) {
-    for (var i = 0; i < tags.length - 1; i++) {
-      if (document.getElementById(tags[i].id).getBoundingClientRect().top <= 0 &&
-        document.getElementById(tags[i + 1].id).getBoundingClientRect().top >= 0) {
-        var target = document.getElementById('catalog').getElementsByTagName('li')[i];
-        if (prev) {
-          prev.className = prev.className.replace('active', '');
-        }
-        target.className = target.className + ' active';
-        prev = target;
-        document.getElementsByClassName('hover')[0].style.top = target.offsetTop + 'px';
-        break;
-      }
-    }
-  }
-
-  function getHtml(tree) {
-
-    var prev = '<ul class="catalog-ul">'
-    var next = '</ul>'
-    var content = '';
-    for (var i = 0; i < tree.length; i++) {
-      if (tree[i].children.length > 0) {
-        content = content + `<li class="catalog-li" data-catalog="${tree[i].id}">${tree[i].title}</li>` +
-          getHtml(tree[i].children)
-      } else {
-        content = content + `<li class="catalog-li" data-catalog="${tree[i].id}">${tree[i].title}</li>`
-      }
-    }
-    return prev + content + next;
-  }
-
-  function findParants(tags) {
-
-    var newTags = [];
-
-    for (var i = 0; i < tags.length; i++) {
-      tags[i].id = 'head-' + i;
-      var treeItem = {
-        title: tags[i].innerText || tags[i].textContent,
-        tagName: tags[i].tagName,
-        id: 'head-' + i,
-        parent: '',
-        children: []
-      }
-
-      if (i == 0) {
-        newTags.push(treeItem);
-        continue;
-      }
-      for (var j = i - 1; j >= 0; j--) {
-        if (tags[i].tagName.replace('H', '') > tags[j].tagName.replace('H', '')) {
-          treeItem.parent = tags[j].id;
-          newTags.push(treeItem);
-          break;
-        } else if (j == 0) {
-          newTags.push(treeItem);
-        }
-      }
-    }
-    return newTags;
-  }
-
-  function getTree(tags) {
-    var trees = [];
-    var map = {};
-    tags.forEach(function (item) {
-      map[item.id] = item;
-    });
-    tags.forEach(function (tag) {
-
-      var parent = map[tag.parent];
-
-      if (parent) {
-        parent.children.push(tag);
-      } else {
-        trees.push(tag);
-      }
-
-    });
-    return trees;
-  }
+new Catalog({
+  contentEl:'#body',
+  catalogEl:'#catalog'
+})
 </script>
 
 </html>
