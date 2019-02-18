@@ -8,6 +8,8 @@
     "build": "babel --presets es2015 src/index.js -o dist/js-catalog.js && uglifyjs dist/js-catalog.js -m -o dist/js-catalog.min.js"
   },
   "keywords": [
+    "js",
+    "js-catalog",
     "catalog"
   ],
   "author": "scyuan",

@@ -13,8 +13,8 @@ var Catalog = function () {
             catalog_activeclass: '', // 目录激活时样式
             selector: 'h1,h2,h3,h4,h5,h6', // 
             hover_class: '',
-            contentEl: '',
-            catalogEl: ''
+            contentEl: '', // 内容区
+            catalogEl: '' // 生成的目录区
         };
         this.tags = null;
         this.content = null;
@@ -42,6 +42,7 @@ var Catalog = function () {
             document.querySelector(this.options.catalogEl).innerHTML = '<div class="wrapper"><div class="hover"></div>' + htmlTree + '</div>';
             this.activeIndex();
             this._bind();
+            window.addEventListener('scroll', this.activeIndex.bind(this));
         }
     }, {
         key: '_bind',
@@ -49,6 +50,7 @@ var Catalog = function () {
             var _this = this;
             document.querySelector(this.options.catalogEl).addEventListener('click', function (e) {
                 if (e.target.tagName == 'UL') return;
+
                 if (_this.prev) {
                     _this.prev.className = _this.prev.className.replace('active', '');
                 }
@@ -61,6 +63,8 @@ var Catalog = function () {
                     top: bounding.y,
                     behavior: 'smooth'
                 });
+
+                // window.scrollBy(0, bounding.y);
             });
         }
     }, {
@@ -128,18 +132,44 @@ var Catalog = function () {
     }, {
         key: 'activeIndex',
         value: function activeIndex() {
-            for (var i = 0; i < this.tags.length - 1; i++) {
-                if (document.getElementById(this.tags[i].id).getBoundingClientRect().top <= 0 && document.getElementById(this.tags[i + 1].id).getBoundingClientRect().top >= 0) {
-                    var target = document.querySelector(this.options.catalogEl).getElementsByTagName('li')[i];
+            // for (var i = 0; i < this.tags.length - 1; i++) {
+            //     if (document.getElementById(this.tags[i].id).getBoundingClientRect().top <= 0 &&
+            //         document.getElementById(this.tags[i + 1].id).getBoundingClientRect().top >= 0) {
+            //         var target = document.querySelector(this.options.catalogEl).getElementsByTagName('li')[i];
+            //         if (this.prev) {
+            //             this.prev.className = this.prev.className.replace('active', '');
+            //         }
+            //         target.className = target.className + ' active';
+            //         this.prev = target;
+            //         document.getElementsByClassName('hover')[0].style.top = target.offsetTop + 'px';
+            //         break;
+            //     }
+            // }
+            var tags = document.querySelector(this.options.contentEl).querySelectorAll(this.options.selector);
+            var boundings = [];
+            for (var i = 0; i < tags.length; i++) {
+                boundings.push(document.getElementById(tags[i].id).getBoundingClientRect());
+            }
+
+            for (var _i = 0; _i < boundings.length; _i++) {
+                if (boundings[_i].bottom > 0) {
+                    var target = document.querySelector(this.options.catalogEl).getElementsByTagName('li')[_i];
                     if (this.prev) {
                         this.prev.className = this.prev.className.replace('active', '');
                     }
                     target.className = target.className + ' active';
                     this.prev = target;
                     document.getElementsByClassName('hover')[0].style.top = target.offsetTop + 'px';
-                    break;
+                    return;
                 }
             }
+            var target = document.querySelector(this.options.catalogEl).getElementsByTagName('li')[0];
+            if (this.prev) {
+                this.prev.className = this.prev.className.replace('active', '');
+            }
+            target.className = target.className + ' active';
+            this.prev = target;
+            document.getElementsByClassName('hover')[0].style.top = target.offsetTop + 'px';
         }
     }]);
 
