@@ -28,7 +28,7 @@ class Catalog {
         this.tags = this.findParants();
         var tree = this.getTree();
         var htmlTree = this.getHtml(tree);
-        document.querySelector(this.options.catalogEl).innerHTML = `<div class="wrapper"><div class="hover"></div>${htmlTree}</div>`;
+        document.querySelector(this.options.catalogEl).innerHTML = `<div id="js-catalog_wrapper"><div class="js-catalog_hover"></div>${htmlTree}</div>`;
         this.activeIndex();
         this._bind();
         window.addEventListener('scroll', this.activeIndex.bind(this));
@@ -39,13 +39,13 @@ class Catalog {
             if (e.target.tagName == 'UL') return;
 
             if (_this.prev) {
-                _this.prev.className = _this.prev.className.replace('active', '');
+                _this.prev.className = _this.prev.className.replace('js-catalog_active', '');
             }
-            e.target.className = e.target.className + ' active';
+            e.target.className = e.target.className.replace('js-catalog_active', '') + ' js-catalog_active';
             _this.prev = e.target;
             var datasetId = e.target.getAttribute('data-catalog');
             const bounding = document.getElementById(datasetId).getBoundingClientRect();
-            document.getElementsByClassName('hover')[0].style.top = e.target.offsetTop + 'px';
+            document.getElementsByClassName('js-catalog_hover')[0].style.top = e.target.offsetTop + 'px';
             window.scrollBy({
                 top: bounding.y,
                 behavior: 'smooth'
@@ -99,15 +99,15 @@ class Catalog {
         return trees;
     }
     getHtml(tree) {
-        var prev = '<ul class="catalog-ul">'
+        var prev = '<ul class="js-catalog_ul">'
         var next = '</ul>'
         var content = '';
         for (var i = 0; i < tree.length; i++) {
             if (tree[i].children.length > 0) {
-                content = content + `<li class="catalog-li" data-catalog="${tree[i].id}">${tree[i].title}</li>` +
+                content = content + `<li class="js-catalog_li" data-catalog="${tree[i].id}">${tree[i].title}</li>` +
                     this.getHtml(tree[i].children)
             } else {
-                content = content + `<li class="catalog-li" data-catalog="${tree[i].id}">${tree[i].title}</li>`
+                content = content + `<li class="js-catalog_li" data-catalog="${tree[i].id}">${tree[i].title}</li>`
             }
         }
         return prev + content + next;
@@ -136,20 +136,20 @@ class Catalog {
             if (boundings[i].bottom > 0) {
                 var target = document.querySelector(this.options.catalogEl).getElementsByTagName('li')[i];
                 if (this.prev) {
-                    this.prev.className = this.prev.className.replace('active', '');
+                    this.prev.className = this.prev.className.replace('js-catalog_active', '');
                 }
-                target.className = target.className + ' active';
+                target.className = target.className.replace('js-catalog_active', '') + ' js-catalog_active';
                 this.prev = target;
-                document.getElementsByClassName('hover')[0].style.top = target.offsetTop + 'px';
+                document.getElementsByClassName('js-catalog_hover')[0].style.top = target.offsetTop + 'px';
                 return;
             }
         }
         var target = document.querySelector(this.options.catalogEl).getElementsByTagName('li')[0];
         if (this.prev) {
-            this.prev.className = this.prev.className.replace('active', '');
+            this.prev.className = this.prev.className.replace('js-catalog_active', '');
         }
-        target.className = target.className + ' active';
+        target.className = target.className.replace('js-catalog_active', '') + ' js-catalog_active';
         this.prev = target;
-        document.getElementsByClassName('hover')[0].style.top = target.offsetTop + 'px';
+        document.getElementsByClassName('js-catalog_hover')[0].style.top = target.offsetTop + 'px';
     }
 }

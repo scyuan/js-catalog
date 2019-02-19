@@ -17,9 +17,58 @@
 			position: fixed;
 			top: 0;
 			right: 0;
+			width: 180px;
 		}
+		#js-catalog_wrapper{
+			position: relative;
+		}
+		#js-catalog_wrapper ul,#js-catalog_wrapper li{
+			list-style: none;
+			padding: 0;
+			color: #5c6975;
+			cursor: pointer;
+		}
+		
+		#js-catalog_wrapper > .js-catalog_ul > .js-catalog_li{
+			color: #000;
+			font-weight: bold;
+		}
+		#js-catalog_wrapper .js-catalog_ul{
+			padding-left: 10px;
+		}
+		#js-catalog_wrapper .js-catalog_li{
+			line-height: 24px;
+		}
+		.js-catalog_hover{
+			width: 100%;
+			height: 24px;
+			background-color: #ebedef;
+			position: absolute;
+			left: 0;
+			top: 0;
+			z-index: -1;
+			transition: all 0.3s;
+		}
+		#js-catalog_wrapper .js-catalog_active{
+			color: #007fff !important;
+		}
+
+		/* #catalog::before{
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 7px;
+			bottom: 0;
+			width: 2px;
+			background-color: #ebedef;
+			opacity: .5;
+		}
+		#catalog .wrapper > .catalog-ul > .catalog-li{
+			color: #000;
+			font-weight: bold;
+		} */
 		#body{
-			padding-right: 100px;
+			padding-right: 200px;
 			overflow: scroll;
 		}
 		button{
@@ -32,13 +81,17 @@
 			line-height: 25px;
 			transition: all 0.3s;
 		}
+		#catalog li[data-catalog="head-0"]{
+			color: #000;
+			font-weight: inherit;
+		}
 		.wrapper{
 			position: relative;
 		}
 		.hover{
 			width: 100%;
 			height: 25px;
-			background: #ccc;
+			background-color: #ebedef;
 			position: absolute;
 			left: 0;
 			top: 0;
@@ -46,7 +99,7 @@
 			transition: all 0.3s;
 		}
 		.active{
-			color: #fff;
+			
 		}
 		.scroll{
 			height: 50px;
@@ -87,17 +140,6 @@
 
 	</div>
 	<div id='catalog'></div>
-	<div class="scroll">
-		<p>刷卡机的回复看就</p>
-		<p>圣诞快乐房间莱克斯顿</p>
-		<p>圣诞节后方可世纪东方</p>
-		<p>刷卡机的回复看就</p>
-		<p>圣诞快乐房间莱克斯顿</p>
-		<p>圣诞节后方可世纪东方</p>
-		<p>刷卡机的回复看就</p>
-		<p>圣诞快乐房间莱克斯顿</p>
-		<p>圣诞节后方可世纪东方</p>
-	</div>
 
 	<button type="button" onclick="create();">生成目录</button>
 </body>
