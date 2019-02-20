@@ -37,7 +37,6 @@ class Catalog {
         var _this = this;
         document.querySelector(this.options.catalogEl).addEventListener('click', function (e) {
             if (e.target.tagName == 'UL') return;
-
             if (_this.prev) {
                 _this.prev.className = _this.prev.className.replace('js-catalog_active', '');
             }
@@ -50,9 +49,6 @@ class Catalog {
                 top: bounding.y,
                 behavior: 'smooth'
             });
-
-            // window.scrollBy(0, bounding.y);
-
         })
     }
     findParants() {
@@ -113,19 +109,6 @@ class Catalog {
         return prev + content + next;
     }
     activeIndex() {
-        // for (var i = 0; i < this.tags.length - 1; i++) {
-        //     if (document.getElementById(this.tags[i].id).getBoundingClientRect().top <= 0 &&
-        //         document.getElementById(this.tags[i + 1].id).getBoundingClientRect().top >= 0) {
-        //         var target = document.querySelector(this.options.catalogEl).getElementsByTagName('li')[i];
-        //         if (this.prev) {
-        //             this.prev.className = this.prev.className.replace('active', '');
-        //         }
-        //         target.className = target.className + ' active';
-        //         this.prev = target;
-        //         document.getElementsByClassName('hover')[0].style.top = target.offsetTop + 'px';
-        //         break;
-        //     }
-        // }
         let tags = document.querySelector(this.options.contentEl).querySelectorAll(this.options.selector);
         let boundings = [];
         for (let i = 0; i < tags.length; i++) {
