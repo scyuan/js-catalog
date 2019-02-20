@@ -1,8 +1,8 @@
 {
   "name": "js-catalog",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "无依赖生成文档目录",
-  "main": "lib/dist/js-catalog.js",
+  "main": "lib/index.js",
   "private": false,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
