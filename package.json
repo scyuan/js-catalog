@@ -1,6 +1,6 @@
 {
   "name": "js-catalog",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "无依赖生成文档目录",
   "main": "lib/index.js",
   "private": false,

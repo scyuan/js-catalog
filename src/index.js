@@ -1,4 +1,4 @@
-class Catalog {
+export default class Catalog {
     constructor(opts) {
         this.options = {
             catalog_class: '', // 目录样式
