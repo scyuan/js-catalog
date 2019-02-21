@@ -1,10 +1,7 @@
-export default class Catalog {
+class Catalog {
     constructor(opts) {
         this.options = {
-            catalog_class: '', // 目录样式
-            catalog_activeclass: '', // 目录激活时样式
             selector: 'h1,h2,h3,h4,h5,h6', // 
-            hover_class: '',
             contentEl: '', // 内容区
             catalogEl: '', // 生成的目录区
         }
@@ -28,7 +25,7 @@ export default class Catalog {
         this.tags = this.findParants();
         var tree = this.getTree();
         var htmlTree = this.getHtml(tree);
-        document.querySelector(this.options.catalogEl).innerHTML = `<div id="js-catalog_wrapper"><div class="js-catalog_hover"></div>${htmlTree}</div>`;
+        document.querySelector(this.options.catalogEl).innerHTML = `<div class="js-catalog_container"><div id="js-catalog_wrapper"><div class="js-catalog_hover"></div>${htmlTree}</div></div>`;
         this.activeIndex();
         this._bind();
         window.addEventListener('scroll', this.activeIndex.bind(this));
@@ -123,7 +120,14 @@ export default class Catalog {
                 }
                 target.className = target.className.replace('js-catalog_active', '') + ' js-catalog_active';
                 this.prev = target;
+                // console.log(target.getBoundingClientRect());
                 document.getElementsByClassName('js-catalog_hover')[0].style.top = target.offsetTop + 'px';
+                var h = document.documentElement.clientHeight || document.body.clientHeight;
+                // console.log(h, document.getElementsByClassName('js-catalog_hover')[0].getBoundingClientRect().y);
+                // if (h - document.getElementsByClassName('js-catalog_hover')[0].getBoundingClientRect().y < 0) {
+                //     document.getElementsByClassName('js-catalog_container')[0].scrollTop = 1000;
+                // }
+                // document.getElementsByClassName('js-catalog_hover')[0].style.top = target.getBoundingClientRect().y + 'px';
                 return;
             }
         }

@@ -1,7 +1,11 @@
+.js-catalog_container {
+    height: 100%;
+    overflow: auto;
+}
+
 #js-catalog_wrapper {
     position: relative;
     padding-left: 6px;
-    overflow: auto;
 }
 
 #js-catalog_wrapper::before {
@@ -23,6 +27,8 @@
     cursor: pointer;
     transition: all 0.3s;
     font-size: 15px;
+    /* position: relative; */
+    z-index: 2;
 }
 
 #js-catalog_wrapper>.js-catalog_ul>.js-catalog_li {
@@ -47,8 +53,10 @@
     left: 0;
     top: 0;
     z-index: -1;
+    border-left: 2px solid #007fff;
     transition: all 0.3s;
 }
+
 
 #js-catalog_wrapper .js-catalog_active {
     color: #007fff !important;
