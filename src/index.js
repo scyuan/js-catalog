@@ -1,4 +1,4 @@
-class Catalog {
+export default class Catalog {
   constructor(opts) {
     this.options = {
       selector: "h1,h2,h3,h4,h5,h6", //
@@ -28,7 +28,6 @@ class Catalog {
     document.querySelector(
       this.options.catalogEl
     ).innerHTML = `<div class="js-catalog_container"><div id="js-catalog_wrapper"><div class="js-catalog_hover"></div>${htmlTree}</div></div>`;
-    // this.activeIndex();
     this._bind();
     window.addEventListener("scroll", this.activeIndex.bind(this));
   }
@@ -36,19 +35,9 @@ class Catalog {
     var _this = this;
     document.querySelector(this.options.catalogEl).addEventListener("click", function(e) {
       if (e.target.tagName == "UL") return;
-      if (_this.prev) {
-        _this.prev.className = _this.prev.className.replace("js-catalog_active", "");
-      }
-      e.target.className =
-        e.target.className.replace("js-catalog_active", "") + " js-catalog_active";
-      _this.prev = e.target;
       var datasetId = e.target.getAttribute("data-catalog");
       const bounding = document.getElementById(datasetId).getBoundingClientRect();
       document.getElementsByClassName("js-catalog_hover")[0].style.top = e.target.offsetTop + "px";
-      //   window.scrollBy({
-      //     top: bounding.y,
-      //     behavior: "smooth"
-      //   });
       window.scrollBy(0, bounding.y);
     });
   }
