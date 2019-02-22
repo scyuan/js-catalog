@@ -23,9 +23,9 @@
 #js-catalog_wrapper li {
     list-style: none;
     padding: 0;
+    margin: 0;
     color: #5c6975;
     cursor: pointer;
-    transition: all 0.3s;
     font-size: 15px;
     /* position: relative; */
     z-index: 2;
@@ -48,13 +48,13 @@
 .js-catalog_hover {
     width: 100%;
     height: 26px;
-    background-color: #ebedef;
+    background-color: #f3f3f3;
     position: absolute;
     left: 0;
     top: 0;
     z-index: -1;
     border-left: 2px solid #007fff;
-    transition: all 0.3s;
+    /* transition: all 0.3s; */
 }
 
 
