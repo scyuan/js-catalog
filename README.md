@@ -2,7 +2,7 @@ Generate a directory based on the HTML structure without dependencies. and Direc
 
 ### Demo
 
-![](https://ws4.sinaimg.cn/large/006tKfTcgy1g0fdih9y9fg310r0u07wn.gif)
+![](https://note.youdao.com/yws/public/resource/c43595e0f3c50c1fc42143fed714c633/xmlnote/WEBRESOURCE9045059209c7999b32e5c1b6dad9f6dd/7265)
 
 ### Use
 
