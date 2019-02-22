@@ -1,7 +1,7 @@
 {
   "name": "js-catalog",
-  "version": "1.1.3",
-  "description": "无依赖生成文档目录",
+  "version": "1.1.4",
+  "description": "无依赖生成文档目录(Generate a directory based on the HTML structure without dependencies)",
   "main": "lib/index.js",
   "private": false,
   "scripts": {
