@@ -1,6 +1,7 @@
 .js-catalog_container {
     height: 100%;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #js-catalog_wrapper {
@@ -37,7 +38,7 @@
 #js-catalog_wrapper>.js-catalog_ul>.js-catalog_li {
     color: #000;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 #js-catalog_wrapper .js-catalog_ul {

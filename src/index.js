@@ -9,7 +9,9 @@ export default class Catalog {
         this.tags = null;
         this.content = null;
         this.prev = null;
+        this.hasScroll = false;
         this._init(opts);
+        return this;
     }
     _init(opts) {
         this.options = Object.assign({}, this.options, opts);
@@ -31,8 +33,17 @@ export default class Catalog {
         ).innerHTML = `<div class="js-catalog_container"><div id="js-catalog_wrapper"><div class="js-catalog_hover"></div>${htmlTree}</div></div>`;
         this._bind();
         this.activeIndex();
-        window.addEventListener("scroll", this.activeIndex.bind(this));
+        var height = parseFloat(this._getStyle(document.querySelector(this.options.contentEl), "height").replace("px", ""));
+        height = Math.round(height);
+        var scrollHeight = document.querySelector(this.options.contentEl).scrollHeight;
+        if (scrollHeight > height) {
+            this.hasScroll = true;
+            document.querySelector(this.options.contentEl).addEventListener("scroll", this.activeIndex.bind(this))
+        } else {
+            window.addEventListener("scroll", this.activeIndex.bind(this));
+        }
     }
+
     _bind() {
         var _this = this;
         document.querySelector(this.options.catalogEl).addEventListener("click", function (e) {
@@ -40,8 +51,19 @@ export default class Catalog {
             var datasetId = e.target.getAttribute("data-catalog");
             const bounding = document.getElementById(datasetId).getBoundingClientRect();
             document.getElementsByClassName("js-catalog_hover")[0].style.top = e.target.offsetTop + "px";
-            window.scrollBy(0, bounding.y - _this.options.offsetTop);
+            if (_this.hasScroll) {
+                document.querySelector(_this.options.contentEl).scrollBy(0, bounding.y - _this.options.offsetTop);
+            } else {
+                window.scrollBy(0, bounding.y - _this.options.offsetTop);
+            }
         });
+    }
+    _getStyle(obj, attr) {
+        if (window.getComputedStyle) {
+            return getComputedStyle(obj, null)[attr];
+        } else {
+            return obj.currentStyle[attr];
+        }
     }
     findParants() {
         var newTags = [];
@@ -151,15 +173,17 @@ export default class Catalog {
             // hover与wrapper底端的距离
             var distance = wrapper_bounding.bottom - hover_bounding.bottom;
             if (distance > h) {
-                document.getElementsByClassName("js-catalog_container")[0].scrollBy({
-                    top: h / 2,
-                    behavior: "smooth"
-                });
+                document.getElementsByClassName("js-catalog_container")[0].scrollBy(0, h / 2);
+                // document.getElementsByClassName("js-catalog_container")[0].scrollBy({
+                //     top: h / 2,
+                //     behavior: "smooth"
+                // });
             } else {
-                document.getElementsByClassName("js-catalog_container")[0].scrollBy({
-                    top: scrollHeight - h - scrollTop,
-                    behavior: "smooth"
-                });
+                document.getElementsByClassName("js-catalog_container")[0].scrollBy(0, scrollHeight - h - scrollTop);
+                // document.getElementsByClassName("js-catalog_container")[0].scrollBy({
+                //     top: scrollHeight - h - scrollTop,
+                //     behavior: "smooth"
+                // });
             }
             //   if (scrollHeight - (h + scrollTop) < h) {
             //     document.getElementsByClassName("js-catalog_container")[0].scrollBy({
@@ -178,15 +202,19 @@ export default class Catalog {
                 //   计算hover与wrapper顶端的距离
                 var distance = hover_bounding.top - wrapper_bounding.top;
                 if (distance > h) {
-                    document.getElementsByClassName("js-catalog_container")[0].scrollBy({
-                        top: -h / 2,
-                        behavior: "smooth"
-                    });
+                    document.getElementsByClassName("js-catalog_container")[0].scrollBy(0, -h / 2);
+
+                    // document.getElementsByClassName("js-catalog_container")[0].scrollBy({
+                    //     top: -h / 2,
+                    //     behavior: "smooth"
+                    // });
                 } else {
-                    document.getElementsByClassName("js-catalog_container")[0].scrollBy({
-                        top: -(scrollHeight - h - scrollTop),
-                        behavior: "smooth"
-                    });
+                    document.getElementsByClassName("js-catalog_container")[0].scrollBy(0, -(scrollHeight - h - scrollTop));
+
+                    // document.getElementsByClassName("js-catalog_container")[0].scrollBy({
+                    //     top: -(scrollHeight - h - scrollTop),
+                    //     behavior: "smooth"
+                    // });
                 }
                 // if (scrollTop > h) {
                 //   document.getElementsByClassName("js-catalog_container")[0].scrollBy({

@@ -9,6 +9,10 @@ Generate a directory based on the HTML structure without dependencies. and Direc
 Vue or other can import ES6 modules.
 
 ```JavaScript
+
+import Catalog from "js-catalog";
+import "js-catalog/lib/style/style.css";
+
 new Catalog({
     contentEl: '#body',
     catalogEl: '#catalog',
