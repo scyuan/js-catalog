@@ -25,7 +25,7 @@ export default class Catalog {
             return;
         }
         this.tags = this.content.querySelectorAll(this.options.selector);
-        if (!this.tags || this.tags.length) {
+        if (!this.tags || this.tags.length <= 0) {
             return;
         }
         this.tags = this.findParants();
