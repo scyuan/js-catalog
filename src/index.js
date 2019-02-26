@@ -26,6 +26,9 @@ export default class Catalog {
         }
         this.tags = this.content.querySelectorAll(this.options.selector);
         if (!this.tags || this.tags.length <= 0) {
+            document.querySelector(
+                this.options.catalogEl
+            ).innerHTML = `<div class="js-catalog_container"></div>`;
             return;
         }
         this.tags = this.findParants();
