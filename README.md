@@ -6,7 +6,7 @@ Generate a directory based on the HTML structure without dependencies. and Direc
 
 ### Use
 
-Vue or other can import ES6 modules.
+#### Vue or other can import ES6 modules.
 
 ```JavaScript
 
@@ -18,6 +18,17 @@ new Catalog({
     catalogEl: '#catalog',
     offsetTop: 60         // offset top
 })
+```
+#### via script
+```
+<script src="/lib/umd/index.js"></script>
+<script>
+    new Catalog({
+        contentEl: '#body',
+        catalogEl: '#catalog',
+        offsetTop: 60      // offset top
+    })
+</script>
 ```
 
 ```html
