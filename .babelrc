@@ -1,3 +1,20 @@
 {
-  "presets": ["es2015"]
+  "presets": ["es2015"],
+  "plugins": [
+    ["transform-es2015-modules-umd", {
+      "globals": {
+        "index": "Catalog"
+      },
+      "exactGlobals": true
+    }]
+  ],
+  "moduleId": "Catalog"
 }
+// {
+//   "presets": ["es2015"],
+//   "plugins": [
+//     "add-module-exports",
+//     "transform-es2015-modules-umd"
+//   ],
+//   "moduleId": "Catalog"
+// }
