@@ -42,15 +42,15 @@ class Catalog {
       return;
     }
     this.tags = this._findParants();
-    var tree = this._getTree();
-    var htmlTree = this._getHtml(tree);
+    let tree = this._getTree();
+    let htmlTree = this._getHtml(tree);
     this.catalog.innerHTML = `<div class="js-catalog_container"><div id="js-catalog_wrapper"><div class="js-catalog_hover"></div>${htmlTree}</div></div>`;
   }
 
   _bind() {
-    var height = parseFloat(this._getStyle(this.content, "height").replace("px", ""));
+    let height = parseFloat(this._getStyle(this.content, "height").replace("px", ""));
     height = Math.round(height);
-    var scrollHeight = this.content.scrollHeight;
+    let scrollHeight = this.content.scrollHeight;
     if (scrollHeight > height) {
       this.hasScroll = true;
       this.content.addEventListener("scroll", this._activeIndex.bind(this))
@@ -62,7 +62,7 @@ class Catalog {
 
   _handleClick(e) {
     if (e.target.tagName == "UL") return;
-    var datasetId = e.target.getAttribute("data-catalog");
+    let datasetId = e.target.getAttribute("data-catalog");
     const bounding = document.getElementById(datasetId).getBoundingClientRect();
     document.getElementsByClassName("js-catalog_hover")[0].style.top = e.target.offsetTop + "px";
     if (this.hasScroll) {
@@ -80,10 +80,10 @@ class Catalog {
     }
   }
   _findParants() {
-    var newTags = [];
-    for (var i = 0; i < this.tags.length; i++) {
+    let newTags = [];
+    for (let i = 0; i < this.tags.length; i++) {
       this.tags[i].id = "head-" + i;
-      var treeItem = {
+      let treeItem = {
         title: this.tags[i].innerText || tags[i].textContent,
         tagName: this.tags[i].tagName,
         id: "head-" + i,
@@ -94,7 +94,7 @@ class Catalog {
         newTags.push(treeItem);
         continue;
       }
-      for (var j = i - 1; j >= 0; j--) {
+      for (let j = i - 1; j >= 0; j--) {
         if (this.tags[i].tagName.replace("H", "") > this.tags[j].tagName.replace("H", "")) {
           treeItem.parent = this.tags[j].id;
           newTags.push(treeItem);
@@ -107,13 +107,13 @@ class Catalog {
     return newTags;
   }
   _getTree() {
-    var trees = [];
-    var map = {};
+    let trees = [];
+    let map = {};
     this.tags.forEach(function (item) {
       map[item.id] = item;
     });
     this.tags.forEach(function (tag) {
-      var parent = map[tag.parent];
+      let parent = map[tag.parent];
       if (parent) {
         parent.children.push(tag);
       } else {
@@ -123,10 +123,10 @@ class Catalog {
     return trees;
   }
   _getHtml(tree) {
-    var prev = '<ul class="js-catalog_ul">';
-    var next = "</ul>";
-    var content = "";
-    for (var i = 0; i < tree.length; i++) {
+    let prev = '<ul class="js-catalog_ul">';
+    let next = "</ul>";
+    let content = "";
+    for (let i = 0; i < tree.length; i++) {
       if (tree[i].children.length > 0) {
         content =
           content +
@@ -141,50 +141,51 @@ class Catalog {
   }
   _activeIndex() {
     if (!document.querySelector(this.options.catalogEl) || !document.querySelector(this.options.catalogEl)) return;
+    if (this.catalog.getElementsByTagName("li").length <= 0) return;
     let tags = this.content.querySelectorAll(this.options.selector);
     let boundings = [];
     for (let i = 0; i < tags.length; i++) {
       boundings.push(document.getElementById(tags[i].id).getBoundingClientRect());
     }
-    var index = 0;
+    let index = 0;
     for (let i = 0; i < boundings.length; i++) {
       if (boundings[i].bottom >= this.options.offsetTop) {
         index = i;
         break;
       }
     }
-    var target = this.catalog.getElementsByTagName("li")[index];
+    let target = this.catalog.getElementsByTagName("li")[index];
     if (this.prev) {
       this.prev.className = this.prev.className.replace("js-catalog_active", "");
     }
     target.className = target.className.replace("js-catalog_active", "") + " js-catalog_active";
     this.prev = target;
 
-    var hover = document.getElementsByClassName("js-catalog_hover")[0];
+    let hover = document.getElementsByClassName("js-catalog_hover")[0];
     hover.style.top = target.offsetTop + "px";
-    var hover_bounding = {
+    let hover_bounding = {
       top: hover.getBoundingClientRect().top,
       bottom: hover.getBoundingClientRect().bottom
     };
 
-    var contanier = document.getElementsByClassName("js-catalog_container")[0];
-    var scrollTop = contanier.scrollTop;
-    var scrollHeight = contanier.scrollHeight;
-    var contanier_bounding = {
+    let contanier = document.getElementsByClassName("js-catalog_container")[0];
+    let scrollTop = contanier.scrollTop;
+    let scrollHeight = contanier.scrollHeight;
+    let contanier_bounding = {
       top: contanier.getBoundingClientRect().top,
       bottom: contanier.getBoundingClientRect().bottom
     };
-    var wrapper_bounding = {
+    let wrapper_bounding = {
       top: document.getElementById("js-catalog_wrapper").getBoundingClientRect().top,
       bottom: document.getElementById("js-catalog_wrapper").getBoundingClientRect().bottom
     };
-    var h = contanier.clientHeight;
-    var scrollTop = contanier.scrollTop;
+    let h = contanier.clientHeight;
+    scrollTop = contanier.scrollTop;
 
     // 判断向下滑并滑出视野范围内
     if (hover_bounding.bottom > contanier_bounding.bottom) {
       // hover与wrapper底端的距离
-      var distance = wrapper_bounding.bottom - hover_bounding.bottom;
+      let distance = wrapper_bounding.bottom - hover_bounding.bottom;
       if (distance > h) {
         document.getElementsByClassName("js-catalog_container")[0].scrollBy(0, h / 2);
       } else {
@@ -195,7 +196,7 @@ class Catalog {
       // 判断向上滑出视野范围内
       if (hover_bounding.top < contanier_bounding.top) {
         //   计算hover与wrapper顶端的距离
-        var distance = hover_bounding.top - wrapper_bounding.top;
+        let distance = hover_bounding.top - wrapper_bounding.top;
         if (distance > h) {
           document.getElementsByClassName("js-catalog_container")[0].scrollBy(0, -h / 2);
         } else {
