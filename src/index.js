@@ -140,7 +140,7 @@ class Catalog {
     return prev + content + next;
   }
   _activeIndex() {
-    if (!document.querySelector(this.options.catalogEl)) return;
+    if (!document.querySelector(this.options.catalogEl) || !document.querySelector(this.options.catalogEl)) return;
     let tags = this.content.querySelectorAll(this.options.selector);
     let boundings = [];
     for (let i = 0; i < tags.length; i++) {
