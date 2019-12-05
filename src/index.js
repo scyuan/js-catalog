@@ -84,7 +84,7 @@ class Catalog {
     for (let i = 0; i < this.tags.length; i++) {
       this.tags[i].id = "head-" + i;
       let treeItem = {
-        title: this.tags[i].innerText || tags[i].textContent,
+        title: this.tags[i].innerText || this.tags[i].textContent,
         tagName: this.tags[i].tagName,
         id: "head-" + i,
         parent: "",
