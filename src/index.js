@@ -33,8 +33,26 @@ class Catalog {
     this._generateTree();
     this._bind();
     this._activeIndex();
+    this._finish();
   }
-
+  _finish() {
+    if (window && window.location.hash) {
+      let datasetId = window.location.hash;
+      let [head, index] = datasetId.split('-');
+      if (isNaN(index)) return;
+      index = parseInt(index);
+      let target = this.catalog.getElementsByTagName("li")[index];
+      if (!target) return;
+      const bounding = document.getElementById(`${datasetId.replace('#','')}`).getBoundingClientRect();
+      setTimeout(() => {
+        if (this.hasScroll) {
+          this.content.scrollBy(0, bounding.y - this.options.offsetTop);
+        } else {
+          window.scrollBy(0, bounding.y - this.options.offsetTop);
+        }
+      }, 0);
+    }
+  }
   _generateTree() {
     this.tags = this.content.querySelectorAll(this.options.selector);
     if (this.tags.length <= 0) {
@@ -70,6 +88,7 @@ class Catalog {
     } else {
       window.scrollBy(0, bounding.y - this.options.offsetTop);
     }
+    if (window && window.location) location.hash = datasetId;
   }
 
   _getStyle(obj, attr) {
